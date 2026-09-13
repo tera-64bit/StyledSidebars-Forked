@@ -1,6 +1,7 @@
 package eu.pb4.styledsidebars;
 
 import eu.pb4.playerdata.api.PlayerDataApi;
+import eu.pb4.placeholders.api.Placeholders;
 import eu.pb4.sidebars.api.Sidebar;
 import eu.pb4.styledsidebars.command.Commands;
 import eu.pb4.styledsidebars.config.ConfigManager;
@@ -33,6 +34,8 @@ public class ModInit implements ModInitializer {
         } catch (Throwable e) {
             e.printStackTrace();
         }
+        Placeholders.registerChangeEvent((id, removed) ->
+                ConfigManager.getStyles().forEach(style -> style.updateLines()));
         Commands.register();
         ServerLifecycleEvents.SERVER_STARTING.register((s) -> {
             CardboardWarning.checkAndAnnounce();
